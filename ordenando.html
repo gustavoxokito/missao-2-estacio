@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Folha de estilo BootStrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+
+    <title>Missão Pratica | Nível 2</title>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="ordenando.html">Ordenado</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="receitas.html">Receitas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="usuarios.html">Usuários</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <label for="valor">Digite um número:</label>
+    <input type="number" name="valor" id="valor" placeholder="Digite um número">
+    <button type="button" onclick="add()" class="btn btn-primary">Adicionar</button>
+
+    <hr>
+
+    <select name="acao" id="acao" class="form-select form-select-sm" aria-label="Default select example">
+        <option value="Selection Sort">Selection Sort</option>
+        <option value="Blubble Sort" selected>Blubble Sort</option>
+        <option value="Quick Sort">Quick Sort</option>
+    </select>
+
+    <hr>
+
+    <button type="button" onclick="ordenar()" class="btn btn-primary">Ordenar</button>
+    <button type="button" onclick="misturar()" class="btn btn-primary">Misturar</button>
+
+    <hr>
+    <p>Lista dos valores adicionados</p>
+    <br>
+    <ul id="valores"></ul>
+
+
+
+    <script src="ordenando.js"></script>
+    <script>
+
+        vetor = [];
+
+        function list_vetor() {
+            const ul = document.getElementById("valores");
+            ul.innerHTML = "";
+            vetor.map(function (elem) {
+                let li = document.createElement("li");
+                li.appendChild(document.createTextNode(elem));
+                ul.appendChild(li);
+            });
+        }
+
+        function add() {
+            console.log("add");
+            const valor = document.getElementById("valor");
+
+            if (valor.value == '') {
+                return
+            }
+
+            if (vetor.includes(eval(valor.value)) == false) {
+                vetor.push(eval(valor.value));
+            };
+            list_vetor();
+            valor.value = '';
+
+
+
+        };
+
+        function ordenar() {
+            const select = document.getElementById("acao");
+            const select_value = select.value;
+            alert(select_value)
+
+            switch (select_value) {
+                case "Blubble Sort":
+                    vetor = bubble_sort(vetor);
+                    list_vetor();
+                    break;
+                case "Selection Sort":
+                    vetor = selection_sort(vetor);
+                    list_vetor();
+                    break;
+                case "Quick Sort":
+                    vetor = quick_sort(vetor, 0, vetor.length - 1);
+                    list_vetor();
+                    break;
+                default:
+                    console.log(`select_value invalido '${select_value}'`);
+            };
+        };
+
+        function misturar() {
+            vetor = shuffle(vetor, vetor.length);
+            list_vetor();
+        };
+    </script>
+
+</body>
+
+<!--Pacote plug-ins BootStrap-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+
+</html>
